@@ -1,0 +1,99 @@
+{
+  "data": {
+    "0": {
+      "id": 106390,
+      "wikiDataId": "Q1780",
+      "type": "CITY",
+      "city": "Bratislava",
+      "name": "Bratislava",
+      "country": "Slovakia",
+      "countryCode": "SK",
+      "region": "Bratislava Region",
+      "regionCode": "BL",
+      "latitude": 48.144722222,
+      "longitude": 17.112777777
+    },
+    "1": {
+      "id": 107043,
+      "wikiDataId": "Q25409",
+      "type": "CITY",
+      "city": "Košice",
+      "name": "Košice",
+      "country": "Slovakia",
+      "countryCode": "SK",
+      "region": "Košice Region",
+      "regionCode": "KI",
+      "latitude": 48.716666666,
+      "longitude": 21.25
+    },
+    "2": {
+      "id": 165838,
+      "wikiDataId": "Q761574",
+      "type": "ADM2",
+      "city": "Nitra District",
+      "name": "Nitra District",
+      "country": "Slovakia",
+      "countryCode": "SK",
+      "region": "Nitra Region",
+      "regionCode": "NI",
+      "latitude": 48.31,
+      "longitude": 18.085833333
+    },
+    "3": {
+      "id": 165823,
+      "wikiDataId": "Q756658",
+      "type": "ADM2",
+      "city": "Prešov District",
+      "name": "Prešov District",
+      "country": "Slovakia",
+      "countryCode": "SK",
+      "region": "Prešov Region",
+      "regionCode": "PV",
+      "latitude": 49.001666666,
+      "longitude": 21.24
+    },
+    "4": {
+      "id": 165840,
+      "wikiDataId": "Q614140",
+      "type": "ADM2",
+      "city": "Prievidza District",
+      "name": "Prievidza District",
+      "country": "Slovakia",
+      "countryCode": "SK",
+      "region": "Trenčín Region",
+      "regionCode": "TC",
+      "latitude": 48.773055555,
+      "longitude": 18.622222222
+    },
+    "5": {
+      "id": 165835,
+      "wikiDataId": "Q775484",
+      "type": "ADM2",
+      "city": "Trnava District",
+      "name": "Trnava District",
+      "country": "Slovakia",
+      "countryCode": "SK",
+      "region": "Trnava Region",
+      "regionCode": "TA",
+      "latitude": 48.373611111,
+      "longitude": 17.595
+    },
+    "6": {
+      "id": 165827,
+      "wikiDataId": "Q836201",
+      "type": "ADM2",
+      "city": "Žilina District",
+      "name": "Žilina District",
+      "country": "Slovakia",
+      "countryCode": "SK",
+      "region": "Žilina Region",
+      "regionCode": "ZI",
+      "latitude": 49.220833333,
+      "longitude": 18.740555555
+    }
+  },
+  "metadata":{
+    "currentOffset":0,
+    "totalCount":7
+  }
+}
