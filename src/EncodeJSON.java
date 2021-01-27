@@ -15,14 +15,32 @@ public class EncodeJSON {
         obj.put("sport", "Football");
         System.out.println(obj);
 
+        readWeatherConditions();
         readPlaces();
+    }
+
+    public static void readWeatherConditions(){
+        JSONParser parser = new JSONParser();
+        try{
+            BufferedReader read = new BufferedReader(new FileReader("resources/weather.json"));
+            JSONObject obj = (JSONObject) parser.parse(read);
+            JSONObject main = (JSONObject) obj.get("main");
+            Double temp = (Double) main.get("temp");
+            Long pressure = (Long) main.get("pressure");
+            Long humidity = (Long) main.get("humidity");
+            Long visibility = (Long) obj.get("visibility");
+            System.out.println("Temperature(C): " +(temp-272.15) +", Pressure(hPa): " +pressure +", Humidity(%): " +humidity +", Visibility(m): " +visibility);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void readPlaces(){
         JSONParser parser = new JSONParser();
         try{
             BufferedReader read = new BufferedReader(new FileReader("resources/places.json"));
-            JSONObject obj = (JSONObject)parser.parse(read);
+            JSONObject obj = (JSONObject) parser.parse(read);
             JSONObject data = (JSONObject) obj.get("data");
             for(int i=0; i<data.size(); i++){
                 JSONObject index = (JSONObject) data.get(String.valueOf(i));
