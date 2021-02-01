@@ -1,3 +1,5 @@
+package sk.kosickaacademic.simon.examples;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,8 +13,10 @@ public class EncodeJSON {
         JSONArray arr = new JSONArray();
         obj.put("name", "Jozin");
         obj.put("age", 32);
-        //arr.add()
-        obj.put("sport", "Football");
+        arr.add("Football");
+        arr.add("Ice Hockey");
+        arr.add("Tennis");
+        obj.put("sport", arr);
         System.out.println(obj);
 
         readWeatherConditions();
@@ -51,6 +55,7 @@ public class EncodeJSON {
                 Double longitude = (Double) index.get("longitude");
                 System.out.println("City: " +city +", Region: " +region +", WikiDataID: " +wikiDataId +", Latitude: " +latitude +", Longitude: " +longitude);
             }
+
         }catch (Exception e){
             e.printStackTrace();
         }
