@@ -62,10 +62,9 @@ public class Database {
 
     public static ArrayList<CapitalCity> getCapitalCities(String continent){
         ArrayList<CapitalCity> list = new ArrayList<>();
-        String query="SELECT city.Name, JSON_EXTRACT(doc, '$.geography.Continent') AS Continent, "
-                +"JSON_EXTRACT(doc, '$.demographics.Population') AS Population FROM country "
-                +"INNER JOIN countryinfo ON country.Code = countryinfo._id "
-                +"WHERE Continent LIKE ?";
+        String query="SELECT city.Name, country.Name, JSON_EXTRACT(doc, '$.demographics.Population') AS Population FROM country "
+                +"INNER JOIN countryinfo ON country.Code = countryinfo._id INNER JOIN city ON country.Capital = city.ID "
+                +"WHERE JSON_UNQUOTE(JSON_EXTRACT(doc,'$.geography.Continent')) LIKE ?";
         try{
             Connection con = getConnection();
             if(con!=null){
@@ -73,18 +72,18 @@ public class Database {
                 ps.setString(1, continent);
                 ResultSet rs = ps.executeQuery();
                 while(rs.next()){
-                    String name = rs.getString("");
-                    String country = rs.getString("");
+                    String capital = rs.getString("city.Name");
+                    String country = rs.getString("country.Name");
                     int population = rs.getInt("Population");
-                    CapitalCity capital = new CapitalCity(name, country, population);
-                    list.add(capital);
+                    CapitalCity capitalCity = new CapitalCity(capital, country, population);
+                    list.add(capitalCity);
                 }
             }
             con.close();
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return list;
     }
 
     public static String getCountryCode(String country){
@@ -122,6 +121,12 @@ public class Database {
                 +"Capital City: " +countryInfo.getCapital() +'\n'
                 +"Continent: " +countryInfo.getContinent() +'\n'
                 +"Area: " +countryInfo.getArea());
+    }
+
+    public static void printCapitalCities(ArrayList<CapitalCity> list){
+        System.out.println();
+        for(CapitalCity temp : list)
+            System.out.println(temp.getName() +" -> " +temp.getCountry() +" -> " +temp.getPopulation());
     }
 
     public static void insertCity(City city){
@@ -172,9 +177,11 @@ public class Database {
         String country = "Nigeria";
         Country countryInfo = getCountryInfo(country);
         ArrayList<City> list = getCities(country);
+        ArrayList<CapitalCity> list2 = getCapitalCities("Europe");
         printCountryInfo(countryInfo);
         printCities(list);
         //insertCity(new City("Humenne", "Slovakia", "Prešov", 23000));
         //updatePopulation("Slovakia", "Humenne", 24200);
+        printCapitalCities(list2);
     }
 }
