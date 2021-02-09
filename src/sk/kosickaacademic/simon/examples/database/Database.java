@@ -104,6 +104,23 @@ public class Database {
         return null;
     }
 
+    public static boolean cityExists(String city, String code3){
+        if(city==null || city.equals("") || code3==null || code3.equals("")) return false;
+        String query = "SELECT city.Name FROM city "
+                +"INNER JOIN country ON country.Code = city.CountryCode WHERE country.Code LIKE ?";
+        try{
+            Connection con = getConnection();
+            if(con!=null){
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setString(1, code3);
+                if(ps.execute()) return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private static Connection getConnection() throws SQLException {
         Connection con = DriverManager.getConnection(url, username, password);
         return con;
@@ -173,6 +190,26 @@ public class Database {
         }
     }
 
+    public static boolean insertNewMonument(String code3, String city, String name){
+        if(!cityExists(city, code3)) return false;
+        String query="INSERT INTO monument (name, city) "
+                +"VALUES(?, ?)";
+        try{
+            Connection con = getConnection();
+            if(con!=null){
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setString(1, name);
+                ps.setString(2, city);
+                int result = ps.executeUpdate();
+                if(result==2) return true;
+                con.close();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         String country = "Nigeria";
         Country countryInfo = getCountryInfo(country);
@@ -183,5 +220,6 @@ public class Database {
         //insertCity(new City("Humenne", "Slovakia", "Prešov", 23000));
         //updatePopulation("Slovakia", "Humenne", 24200);
         printCapitalCities(list2);
+        System.out.println(insertNewMonument("FRA", "2974", "Eiffel Tower"));
     }
 }
