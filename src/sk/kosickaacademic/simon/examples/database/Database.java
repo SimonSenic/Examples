@@ -88,8 +88,9 @@ public class Database {
 
     public static ArrayList<Monument> getMonuments(){
         ArrayList<Monument> list = new ArrayList<>();
-        String query = "SELECT id, name, country.Name, city.Name FROM monuments "
-                +"INNER JOIN country ON country.Code LIKE daco INNER JOIN city on city.Name LIKE ";
+        String query = "SELECT monument.id, monument.name, country.Name, city.Name FROM monument "
+                +"INNER JOIN city ON monument.city LIKE city.ID INNER JOIN country ON city.CountryCode LIKE country.Code "
+                +"ORDER BY ID ASC";
         try{
             Connection con = getConnection();
             if(con!=null){
@@ -97,8 +98,8 @@ public class Database {
                 ResultSet rs = ps.executeQuery();
                 while(rs.next()){
                     String name = rs.getString("name");
-                    String country = rs.getString("");
-                    String city = rs.getString("");
+                    String country = rs.getString("country.Name");
+                    String city = rs.getString("city.Name");
                     int id = rs.getInt("id");
                     Monument m = new Monument(name, country, city, id);
                     list.add(m);
