@@ -86,6 +86,31 @@ public class Database {
         return list;
     }
 
+    public static ArrayList<Monument> getMonuments(){
+        ArrayList<Monument> list = new ArrayList<>();
+        String query = "SELECT id, name, country.Name, city.Name FROM monuments "
+                +"INNER JOIN country ON country.Code LIKE daco INNER JOIN city on city.Name LIKE ";
+        try{
+            Connection con = getConnection();
+            if(con!=null){
+                PreparedStatement ps = con.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    String name = rs.getString("name");
+                    String country = rs.getString("");
+                    String city = rs.getString("");
+                    int id = rs.getInt("id");
+                    Monument m = new Monument(name, country, city, id);
+                    list.add(m);
+                }
+                con.close();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static String getCountryCode(String country){
         if(country==null || country.equals("")) return null;
         String query = "SELECT Code FROM country WHERE Name LIKE ?";
@@ -146,6 +171,12 @@ public class Database {
             System.out.println(temp.getName() +" -> " +temp.getCountry() +" -> " +temp.getPopulation());
     }
 
+    public static void printMonuments(ArrayList<Monument> list){
+        System.out.println();
+        for(Monument temp : list)
+            System.out.println("ID: " +temp.getId() +" Name: " +temp.getName() +" Country: " +temp.getCountry() +" City: " +temp.getCity());
+    }
+
     public static void insertCity(City city){
         String country = city.getCountry();
         String code3 = getCountryCode(country);
@@ -201,7 +232,7 @@ public class Database {
                 ps.setString(1, name);
                 ps.setString(2, city);
                 int result = ps.executeUpdate();
-                if(result==2) return true;
+                if(result==1) return true;
                 con.close();
             }
         }catch (Exception e){
@@ -215,11 +246,13 @@ public class Database {
         Country countryInfo = getCountryInfo(country);
         ArrayList<City> list = getCities(country);
         ArrayList<CapitalCity> list2 = getCapitalCities("Europe");
+        ArrayList<Monument> list3 = getMonuments();
         printCountryInfo(countryInfo);
         printCities(list);
+        printCapitalCities(list2);
+        printMonuments(list3);
         //insertCity(new City("Humenne", "Slovakia", "Prešov", 23000));
         //updatePopulation("Slovakia", "Humenne", 24200);
-        printCapitalCities(list2);
-        System.out.println(insertNewMonument("FRA", "2974", "Eiffel Tower"));
+        //insertNewMonument("FRA", "2974", "Eiffel Tower");
     }
 }
